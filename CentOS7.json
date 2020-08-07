@@ -1,0 +1,67 @@
+{
+	"builders": [
+		{
+			"CPUs": "{{ user `cpu_cores` }}",
+			"RAM": "{{ user `ram_mb` }}",
+			"RAM_reserve_all": true,
+			"boot_wait": "10s",
+			"cluster": "{{ user `cluster` }}",
+			"convert_to_template": true,
+			"datacenter": "{{ user `dc` }}",
+			"datastore": "{{ user `storage` }}",
+			"disk_controller_type": "pvscsi",
+			"guest_os_type": "centos7_64Guest",
+			"insecure_connection": "true",
+			"iso_paths": [
+				"[QTS] directory/CentOS-7-x86_64-Minimal-1810.iso"
+			],
+			"http_directory": "HTTP",
+			"http_port_min": "8001",
+			"http_port_max": "8001",
+			"boot_command": [
+				"<tab><bs><bs><bs><bs><bs> text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/c7.cfg<enter><wait>"
+			],
+			"network_adapters": [
+				{
+					"network": "{{ user `network` }}",
+					"network_card": "vmxnet3"
+				}
+			],
+			"password": "{{ user `vcenter_password` }}",
+			"ssh_host": "{{ user `ssh_host` }}",
+			"ssh_password": "{{ user `ssh_password` }}",
+			"ssh_port": "{{ user `ssh_port` }}",
+			"ssh_timeout": "600s",
+			"ssh_username": "{{ user `ssh_user` }}",
+			"storage": [
+				{
+					"disk_size": "{{ user `disk_size_mb` }}",
+					"disk_thin_provisioned": true
+				}
+			],
+			"type": "vsphere-iso",
+			"communicator": "ssh",
+			"ssh_pty": "true",
+			"username": "{{ user `vcenter_user` }}",
+			"vcenter_server": "10.200.201.30",
+			"vm_name": "{{ user `vm_name` }}"
+		}	
+	],
+	"variables": {
+		"cluster": "Test",
+		"cpu_cores": "1",
+		"dc": "coop",
+		"disk_size_mb": "14336",
+		"ks_file": "ks.cfg",
+		"network": "nsparcdrlan",
+		"ram_mb": "1024",
+		"ssh_host": "10.200.201.28",
+		"ssh_password": "Nsparc1!",
+		"ssh_port": "22",
+		"ssh_user": "root",
+		"storage": "QTS",
+		"vcenter_password": "Nsparc4774",
+		"vcenter_user": "nparween@nsparc.msstate.edu",
+		"vm_name": "centos7"
+	}
+}
